@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bell Curve Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        .chart-container {
+            width: 80%;
+            margin: 40px auto;
+        }
+        #showChartButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #showChartButton:hover {
+            background-color: #218838;
+        }
+    </style>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Bell Curve Analysis</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Rating</th>
+                <th>Standard Distribution (%)</th>
+                <th>Actual Distribution (%)</th>
+                <th>Deviation (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="entry : ${actualPercentage}">
+                <td th:text="${entry.key}"></td>
+                <td th:text="${standardDistribution.get(entry.key)}"></td>
+                <td th:text="${entry.value}"></td>
+                <td th:text="${deviation.get(entry.key)}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Button to Show Chart -->
+    <button id="showChartButton">Show Chart</button>
+
+    <!-- Chart Container -->
+    <div class="chart-container">
+        <canvas id="bellCurveChart"></canvas>
+    </div>
+
+    <a href="/employees/suggest-revisions">View Suggested Revisions</a>
+    <a href="/employees">Back to Employee List</a>
+
+    <!-- JavaScript to Render the Chart -->
+	<script th:inline="javascript">
+	    // Extract data from Thymeleaf
+	    const ratings = ["A", "B", "C", "D", "E"];
+	    const standardDistribution = /*[[${standardDistribution.values()}]]*/ [];
+	    const actualDistribution = /*[[${actualPercentage.values()}]]*/ [];
+
+	    // Log the data to the console for debugging
+	    console.log("Ratings:", ratings);
+	    console.log("Standard Distribution:", standardDistribution);
+	    console.log("Actual Distribution:", actualDistribution);
+
+	    // Add event listener to the button
+	    document.getElementById('showChartButton').addEventListener('click', function () {
+	        console.log("Button clicked!");
+
+	        // Create the chart
+	        const ctx = document.getElementById('bellCurveChart').getContext('2d');
+	        const bellCurveChart = new Chart(ctx, {
+	            type: 'bar',
+	            data: {
+	                labels: ratings,
+	                datasets: [
+	                    {
+	                        label: 'Standard Distribution (%)',
+	                        data: standardDistribution,
+	                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+	                        borderColor: 'rgba(54, 162, 235, 1)',
+	                        borderWidth: 1
+	                    },
+	                    {
+	                        label: 'Actual Distribution (%)',
+	                        data: actualDistribution,
+	                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+	                        borderColor: 'rgba(255, 99, 132, 1)',
+	                        borderWidth: 1
+	                    }
+	                ]
+	            },
+	            options: {
+	                scales: {
+	                    y: {
+	                        beginAtZero: true,
+	                        title: {
+	                            display: true,
+	                            text: 'Percentage (%)'
+	                        }
+	                    },
+	                    x: {
+	                        title: {
+	                            display: true,
+	                            text: 'Rating'
+	                        }
+	                    }
+	                },
+	                plugins: {
+	                    title: {
+	                        display: true,
+	                        text: 'Bell Curve Analysis: Standard vs Actual Distribution'
+	                    }
+	                }
+	            }
+	        });
+
+	        // Hide the button after the chart is shown
+	        this.style.display = 'none';
+	    });
+	</script>
+ 
+</body>
+</html>

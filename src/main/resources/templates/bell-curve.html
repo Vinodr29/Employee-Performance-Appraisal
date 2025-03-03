@@ -63,7 +63,7 @@
             background-color: #218838;
         }
     </style>
-    <!-- Include Chart.js -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -87,10 +87,10 @@
         </tbody>
     </table>
 
-    <!-- Button to Show Chart -->
+    
     <button id="showChartButton">Show Chart</button>
 
-    <!-- Chart Container -->
+    
     <div class="chart-container">
         <canvas id="bellCurveChart"></canvas>
     </div>
@@ -98,23 +98,23 @@
     <a href="/employees/suggest-revisions">View Suggested Revisions</a>
     <a href="/employees">Back to Employee List</a>
 
-    <!-- JavaScript to Render the Chart -->
+    
 	<script th:inline="javascript">
-	    // Extract data from Thymeleaf
+	    
 	    const ratings = ["A", "B", "C", "D", "E"];
 	    const standardDistribution = /*[[${standardDistribution.values()}]]*/ [];
 	    const actualDistribution = /*[[${actualPercentage.values()}]]*/ [];
 
-	    // Log the data to the console for debugging
+	    
 	    console.log("Ratings:", ratings);
 	    console.log("Standard Distribution:", standardDistribution);
 	    console.log("Actual Distribution:", actualDistribution);
 
-	    // Add event listener to the button
+	    
 	    document.getElementById('showChartButton').addEventListener('click', function () {
 	        console.log("Button clicked!");
 
-	        // Create the chart
+	        
 	        const ctx = document.getElementById('bellCurveChart').getContext('2d');
 	        const bellCurveChart = new Chart(ctx, {
 	            type: 'bar',
@@ -162,7 +162,7 @@
 	            }
 	        });
 
-	        // Hide the button after the chart is shown
+	        
 	        this.style.display = 'none';
 	    });
 	</script>

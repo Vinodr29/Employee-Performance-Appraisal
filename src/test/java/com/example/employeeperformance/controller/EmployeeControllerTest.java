@@ -54,7 +54,7 @@ class EmployeeControllerTest {
     void testListEmployees() {
         
         List<Employee> employees = Arrays.asList(
-                new Employee("1", "Vinod", "A"),
+                new Employee("1", "Vinodr", "A"),
                 new Employee("2", "Lalith", "B")
         );
 
@@ -98,7 +98,7 @@ class EmployeeControllerTest {
     void testSuggestRatingRevisions() {
         
         List<Employee> revisedEmployees = Arrays.asList(
-                new Employee("1", "Vinod", "B"),
+                new Employee("1", "Vinodr", "B"),
                 new Employee("2", "Lalith", "C")
         );
 

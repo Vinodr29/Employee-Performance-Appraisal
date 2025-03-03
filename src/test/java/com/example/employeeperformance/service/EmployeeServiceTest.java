@@ -30,7 +30,7 @@ class EmployeeServiceTest {
     @BeforeEach
     void setUp() {
         employees = Arrays.asList(
-                new Employee("1", "Vinod", "A"),
+                new Employee("1", "Vinodr", "A"),
                 new Employee("2", "Sagar", "B"),
                 new Employee("3", "Arun", "C"),
                 new Employee("4", "tejas", "C"),

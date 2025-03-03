@@ -34,7 +34,7 @@ class EmployeeControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this); // Initialize mocks
+        MockitoAnnotations.openMocks(this); 
     }
 
     @Test
@@ -52,26 +52,26 @@ class EmployeeControllerTest {
 
     @Test
     void testListEmployees() {
-        // Mock data
+        
         List<Employee> employees = Arrays.asList(
                 new Employee("1", "John", "A"),
                 new Employee("2", "Jane", "B")
         );
 
-        // Mock repository behavior
+        
         when(employeeRepository.findAll()).thenReturn(employees);
 
-        // Call the method
+        
         String viewName = employeeController.listEmployees(model);
 
-        // Verify the result
+        
         assertEquals("employee-list", viewName);
         verify(model, times(1)).addAttribute("employees", employees);
     }
 
     @Test
     void testShowBellCurve() {
-        // Mock data
+        
         Map<String, Double> actualPercentage = new HashMap<>();
         actualPercentage.put("A", 15.0);
         actualPercentage.put("B", 25.0);
@@ -80,14 +80,14 @@ class EmployeeControllerTest {
         deviation.put("A", 5.0);
         deviation.put("B", 5.0);
 
-        // Mock service behavior
+        
         when(employeeService.calculateActualPercentage()).thenReturn(actualPercentage);
         when(employeeService.calculateDeviation(actualPercentage)).thenReturn(deviation);
 
-        // Call the method
+        
         String viewName = employeeController.showBellCurve(model);
 
-        // Verify the result
+        
         assertEquals("bell-curve", viewName);
         verify(model, times(1)).addAttribute("actualPercentage", actualPercentage);
         verify(model, times(1)).addAttribute("standardDistribution", EmployeeService.STANDARD_DISTRIBUTION);
@@ -96,19 +96,19 @@ class EmployeeControllerTest {
 
     @Test
     void testSuggestRatingRevisions() {
-        // Mock data
+        
         List<Employee> revisedEmployees = Arrays.asList(
                 new Employee("1", "John", "B"),
                 new Employee("2", "Jane", "C")
         );
 
-        // Mock service behavior
+       
         when(employeeService.suggestRatingRevisions()).thenReturn(revisedEmployees);
 
-        // Call the method
+        
         String viewName = employeeController.suggestRatingRevisions(model);
 
-        // Verify the result
+       
         assertEquals("suggest-revisions", viewName);
         verify(model, times(1)).addAttribute("revisedEmployees", revisedEmployees);
     }

@@ -13,20 +13,20 @@ public class Employee {
     private String employeeName;
     private String rating;
 
-    @Transient // This field is not persisted in the database
+    @Transient 
     private String suggestedRating;
 
-    // Default constructor (required by JPA)
+    
     public Employee() {}
 
-    // Parameterized constructor
+   
     public Employee(String employeeId, String employeeName, String rating) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.rating = rating;
     }
 
-    // Getters and Setters
+    
     public Long getId() {
         return id;
     }

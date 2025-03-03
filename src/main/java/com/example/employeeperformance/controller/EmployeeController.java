@@ -20,13 +20,13 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    // Display the form to add an employee
+   
     @GetMapping("/add-form")
     public String showAddEmployeeForm() {
-        return "add-employee"; // Refers to add-employee.html
+        return "add-employee"; 
     }
 
-    // Handle form submission
+   
     @PostMapping("/add")
     public String addEmployee(@RequestParam String employeeId, @RequestParam String employeeName, @RequestParam String rating) {
         Employee employee = new Employee(employeeId, employeeName, rating);
@@ -34,14 +34,14 @@ public class EmployeeController {
         return "redirect:/employees";
     }
 
-    // Display all employees
+   
     @GetMapping
     public String listEmployees(Model model) {
         model.addAttribute("employees", employeeRepository.findAll());
-        return "employee-list"; // Refers to employee-list.html
+        return "employee-list"; 
     }
 
-    // Display bell curve analysis
+    
     @GetMapping("/bell-curve")
     public String showBellCurve(Model model) {
         Map<String, Double> actualPercentage = employeeService.calculateActualPercentage();
@@ -51,13 +51,13 @@ public class EmployeeController {
         model.addAttribute("standardDistribution", EmployeeService.STANDARD_DISTRIBUTION);
         model.addAttribute("deviation", deviation);
 
-        return "bell-curve"; // Refers to bell-curve.html
+        return "bell-curve"; 
     }
 
-    // Display suggested rating revisions
+    
     @GetMapping("/suggest-revisions")
     public String suggestRatingRevisions(Model model) {
         model.addAttribute("revisedEmployees", employeeService.suggestRatingRevisions());
-        return "suggest-revisions"; // Refers to suggest-revisions.html
+        return "suggest-revisions"; 
     }
 }

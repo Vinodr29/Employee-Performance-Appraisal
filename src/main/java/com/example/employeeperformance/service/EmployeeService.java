@@ -13,7 +13,7 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    // Standard bell curve distribution
+    
     public static final Map<String, Double> STANDARD_DISTRIBUTION = Map.of(
             "A", 10.0,
             "B", 20.0,
@@ -22,24 +22,24 @@ public class EmployeeService {
             "E", 10.0
     );
 
-    // Calculate actual percentage of employees in each rating category
+    
     public Map<String, Double> calculateActualPercentage() {
         List<Employee> employees = employeeRepository.findAll();
         int totalEmployees = employees.size();
         Map<String, Double> actualPercentage = new HashMap<>();
 
-        // Initialize counts for each rating category
+        
         Map<String, Integer> ratingCount = new HashMap<>();
         for (String rating : STANDARD_DISTRIBUTION.keySet()) {
             ratingCount.put(rating, 0);
         }
 
-        // Count employees in each rating category
+        
         for (Employee employee : employees) {
             ratingCount.put(employee.getRating(), ratingCount.getOrDefault(employee.getRating(), 0) + 1);
         }
 
-        // Calculate actual percentage for each category
+        
         for (String rating : STANDARD_DISTRIBUTION.keySet()) {
             actualPercentage.put(rating, (ratingCount.get(rating) * 100.0) / totalEmployees);
         }
@@ -47,7 +47,7 @@ public class EmployeeService {
         return actualPercentage;
     }
 
-    // Calculate deviation between actual and standard distribution
+    
     public Map<String, Double> calculateDeviation(Map<String, Double> actualPercentage) {
         Map<String, Double> deviation = new HashMap<>();
         for (String rating : STANDARD_DISTRIBUTION.keySet()) {
@@ -58,7 +58,7 @@ public class EmployeeService {
         return deviation;
     }
 
-    // Suggest rating revisions to align with the bell curve
+    
     public List<Employee> suggestRatingRevisions() {
         Map<String, Double> actualPercentage = calculateActualPercentage();
         Map<String, Double> deviation = calculateDeviation(actualPercentage);
@@ -68,9 +68,9 @@ public class EmployeeService {
         for (Employee employee : employees) {
             String currentRating = employee.getRating();
             double currentDeviation = deviation.getOrDefault(currentRating, 0.0);
-            String suggestedRating = currentRating; // Default to current rating
+            String suggestedRating = currentRating; 
 
-            // If category is overrepresented, try to move employees to underrepresented ones
+            
             if (currentDeviation > 0) {
                 switch (currentRating) {
                     case "A":
@@ -93,12 +93,12 @@ public class EmployeeService {
                         suggestedRating = "D";
                         break;
                     default:
-                        // No change for unknown ratings
+                        
                         break;
                 }
             }
 
-            // Create a revised employee object with the suggested rating
+            
             Employee revisedEmployee = new Employee(
                 employee.getEmployeeId(),
                 employee.getEmployeeName(),

@@ -45,7 +45,7 @@ class EmployeeControllerTest {
 
     @Test
     void testAddEmployee() {
-        String viewName = employeeController.addEmployee("1", "John", "A");
+        String viewName = employeeController.addEmployee("1", "Vinodr", "A");
         assertEquals("redirect:/employees", viewName);
         verify(employeeRepository, times(1)).save(any(Employee.class));
     }
@@ -98,7 +98,7 @@ class EmployeeControllerTest {
     void testSuggestRatingRevisions() {
         
         List<Employee> revisedEmployees = Arrays.asList(
-                new Employee("1", "Vinodr", "B"),
+                new Employee("1", "Vinod", "B"),
                 new Employee("2", "Lalith", "C")
         );
 

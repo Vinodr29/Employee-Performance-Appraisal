@@ -66,7 +66,7 @@ The application uses *MySQL* as the database for persistent storage and *Thymele
 
 1. *Import the project*:
    
-   Import the project to STS- https://github.com/Vinodr29/employee-performance-appraisal.git
+   Import the project to STS- https://github.com/Vinodr29/Employee-Performance-Appraisal
   
    
 

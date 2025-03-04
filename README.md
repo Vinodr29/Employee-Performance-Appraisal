@@ -80,7 +80,7 @@ The application uses *MySQL* as the database for persistent storage and *Thymele
    - Open src/main/resources/application.properties.
    - Update the MySQL credentials (username and password) if necessary:
      properties
-     spring.datasource.url=jdbc:mysql://localhost:3306/employee_performance
+     spring.datasource.url=jdbc:mysql://localhost:3306/employee_performance_db
      spring.datasource.username=your_username
      spring.datasource.password=your_mysql_password
      

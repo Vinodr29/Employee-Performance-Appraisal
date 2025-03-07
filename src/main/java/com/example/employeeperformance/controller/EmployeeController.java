@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,10 +29,10 @@ public class EmployeeController {
 
    
     @PostMapping("/add")
-    public String addEmployee(@RequestParam String employeeId, @RequestParam String employeeName, @RequestParam String rating) {
+    public String addEmployee(@RequestParam int employeeId, @RequestParam String employeeName, @RequestParam String rating) {
         Employee employee = new Employee(employeeId, employeeName, rating);
         employeeRepository.save(employee);
-        return "redirect:/employees";
+        return "redirect:/employees/add-form";
     }
 
    
@@ -60,4 +61,8 @@ public class EmployeeController {
         model.addAttribute("revisedEmployees", employeeService.suggestRatingRevisions());
         return "suggest-revisions"; 
     }
+    
+   
+    
+
 }

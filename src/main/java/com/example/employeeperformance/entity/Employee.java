@@ -6,40 +6,27 @@ import jakarta.persistence.*;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int employeeId;
 
-    private String employeeId;
     private String employeeName;
     private String rating;
 
     @Transient 
     private String suggestedRating;
 
-    
     public Employee() {}
 
-   
-    public Employee(String employeeId, String employeeName, String rating) {
+    public Employee(int employeeId, String employeeName, String rating) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.rating = rating;
     }
 
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 

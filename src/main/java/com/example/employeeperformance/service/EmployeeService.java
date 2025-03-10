@@ -66,41 +66,44 @@ public class EmployeeService {
         List<Employee> employees = employeeRepository.findAll();
         List<Employee> revisedEmployees = new ArrayList<>();
 
-        
+        Map<String, List<Employee>> ratingGroups = new HashMap<>();
+        for (Employee employee : employees) {
+            String rating = employee.getRating();
+            if (!ratingGroups.containsKey(rating)) {
+                ratingGroups.put(rating, new ArrayList<>());
+            }
+            ratingGroups.get(rating).add(employee);
+        }
+
         Map<String, Integer> moveDownCount = new HashMap<>();
         Map<String, Integer> moveUpCount = new HashMap<>();
 
-   
         for (Map.Entry<String, Double> entry : deviation.entrySet()) {
             String rating = entry.getKey();
             double dev = entry.getValue();
             int count = (int) Math.ceil((Math.abs(dev) / 100) * employees.size());
 
-            if (dev > 0) {
-                moveDownCount.put(rating, count); 
-            } else if (dev < 0) {
-                moveUpCount.put(rating, count); 
+            if (ratingGroups.containsKey(rating) && ratingGroups.get(rating).size() >= 4) {
+                if (dev > 0) {
+                    moveDownCount.put(rating, count);
+                } else if (dev < 0) {
+                    moveUpCount.put(rating, count);
+                }
             }
         }
 
-       
-        for (int i = 0; i < employees.size(); i++) {
-            Employee employee = employees.get(i);
+        for (Employee employee : employees) {
             String currentRating = employee.getRating();
-            String suggestedRating = currentRating; 
+            String suggestedRating = currentRating;
 
-           
             if (moveDownCount.containsKey(currentRating) && moveDownCount.get(currentRating) > 0) {
                 suggestedRating = getLowerRating(currentRating);
                 moveDownCount.put(currentRating, moveDownCount.get(currentRating) - 1);
-            }
-           
-            else if (moveUpCount.containsKey(currentRating) && moveUpCount.get(currentRating) > 0) {
+            } else if (moveUpCount.containsKey(currentRating) && moveUpCount.get(currentRating) > 0) {
                 suggestedRating = getHigherRating(currentRating);
                 moveUpCount.put(currentRating, moveUpCount.get(currentRating) - 1);
             }
 
-            
             Employee revisedEmployee = new Employee(
                 employee.getEmployeeId(),
                 employee.getEmployeeName(),
@@ -113,23 +116,22 @@ public class EmployeeService {
         return revisedEmployees;
     }
 
-    
     private String getLowerRating(String rating) {
         if (rating.equals("A")) return "B";
         if (rating.equals("B")) return "C";
         if (rating.equals("C")) return "D";
         if (rating.equals("D")) return "E";
-        return rating; 
+        return rating;
     }
 
-    
     private String getHigherRating(String rating) {
         if (rating.equals("E")) return "D";
         if (rating.equals("D")) return "C";
         if (rating.equals("C")) return "B";
         if (rating.equals("B")) return "A";
-        return rating; 
+        return rating;
     }
+
 
 
 }
